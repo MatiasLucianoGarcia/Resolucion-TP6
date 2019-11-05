@@ -1,0 +1,45 @@
+package driver;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import junit.framework.Assert;
+public class DriverWrapper {
+	
+	public static WebDriver Driver() {
+		return DriverManager.Instance().Driver();
+	}
+	
+	public static boolean IsVisible(By by) {
+		try {
+			return ExpectedConditions.visibilityOfElementLocated(by) !=null;
+		}catch(NoSuchElementException e) {
+			return false;
+		}
+	}
+	
+	public static boolean IsEnable(By by) {
+		try {
+			return Driver().findElement(by).isEnabled();
+		}catch(NoSuchElementException e) {
+			return false;
+		}
+	}
+	
+	public static boolean IsClickable(By by) {
+		try {
+			return IsVisible(by) && (ExpectedConditions.elementToBeClickable(by)!=null);
+		}catch(NoSuchElementException e) {
+			return false;
+		}
+	}
+	
+}
